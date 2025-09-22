@@ -13,12 +13,16 @@ public class Deck
         }
     }
 
-    public Card Draw()
+    public Card? Draw()
     {
         if (cards.Count == 0) return null;
         var top = cards[0];
         cards.RemoveAt(0);
         return top;
+    }
+    public void InitializeDeck()
+    {
+        // här ska decket genereras
     }
 
     public int Count => cards.Count;

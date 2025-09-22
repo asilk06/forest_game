@@ -8,23 +8,23 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Asilbek Khalikov\\.nuget\\packages\\": {},
+    "C:\\Users\\Asilbek\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Asilbek Khalikov\\forest_game\\forest_game.csproj",
+      "projectUniqueName": "C:\\Users\\Asilbek\\forest_game\\forest_game\\forest_game.csproj",
       "projectName": "forest_game",
-      "projectPath": "C:\\Users\\Asilbek Khalikov\\forest_game\\forest_game.csproj",
-      "packagesPath": "C:\\Users\\Asilbek Khalikov\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Asilbek Khalikov\\forest_game\\obj\\",
+      "projectPath": "C:\\Users\\Asilbek\\forest_game\\forest_game\\forest_game.csproj",
+      "packagesPath": "C:\\Users\\Asilbek\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Asilbek\\forest_game\\forest_game\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Asilbek Khalikov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Asilbek\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -72,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
