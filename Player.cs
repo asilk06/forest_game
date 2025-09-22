@@ -12,5 +12,6 @@ public class Player
     public void DrawCard(Deck deck)
     {
         var card = deck.Draw();
+        if (card != null) playerHand.Add(card);
     }
 }
