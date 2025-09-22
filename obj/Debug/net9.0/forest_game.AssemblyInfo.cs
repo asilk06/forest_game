@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("forest_game")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d063f548df388145f44bfc98a90b62e813842ecf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39a1142b1ec5ee9eb11b710178a3878a7f6bddd7")]
 [assembly: System.Reflection.AssemblyProductAttribute("forest_game")]
 [assembly: System.Reflection.AssemblyTitleAttribute("forest_game")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

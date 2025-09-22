@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System;
 public class Deck
 {
     public enum CreatureType { Santa, Owl, Frog, Fairy }
@@ -25,10 +27,10 @@ public class Deck
     {
         cards.Clear();
 
+        // Tree tops
         for (int i = 0; i < 17; i++)
         {
             var creatures = RandomCreatureDistribution();
-            // Add(new TreeTop($"TreeTop {i+1}", "TreeTop", creatures));
         }
     }
 
