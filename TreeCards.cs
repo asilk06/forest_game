@@ -7,7 +7,6 @@ public class TreeTop : Card
     {
         Creatures = creatures;
     }
-
 }
 
 public class TreeTrunk : Card

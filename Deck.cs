@@ -1,5 +1,6 @@
 public class Deck
 {
+    public enum CreatureType { Santa, Owl, Frog, Fairy }
     private List<Card> cards = new List<Card>();
     private Random rng = new Random();
 
@@ -22,8 +23,24 @@ public class Deck
     }
     public void InitializeDeck()
     {
-        // här ska decket genereras
+        cards.Clear();
+
+        for (int i = 0; i < 17; i++)
+        {
+            var creatures = RandomCreatureDistribution();
+            // Add(new TreeTop($"TreeTop {i+1}", "TreeTop", creatures));
+        }
     }
 
+    private Dictionary<CreatureType, int> RandomCreatureDistribution()
+    {
+        // max 4 av varje art per kort
+        var dict = new Dictionary<CreatureType, int>();
+        foreach (CreatureType c in Enum.GetValues(typeof(CreatureType)))
+        {
+            dict[c] = rng.Next(0, 5); // 0–4
+        }
+        return dict;
+    }
     public int Count => cards.Count;
 }
