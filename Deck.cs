@@ -31,22 +31,29 @@ public class Deck
             List<string> creatures = new List<string>();
             for (int i = 0; i < count; i++)
             {
-             string creature = creaturePool[rng.Next(creaturePool.Length)];
-               creatures.Add(creature);
+                string creature = creaturePool[rng.Next(creaturePool.Length)];
+                creatures.Add(creature);
             }
             return creatures;
         }
 
-       // 17 tree tops
+        // 17 tree tops
         for (int i = 0; i < 17; i++)
         {
             cards.Add(new TreeTop(RandomCreatures(4)));
         }
 
-       // 43 tree trunks
-        for (int i = 0; i < 43; i++)
+        // 40 tree trunks
+        for (int i = 0; i < 40; i++)
         {
             cards.Add(new TreeTrunk(RandomCreatures(4)));
+        }
+
+        // 2 jokers och 2 wolves
+        for (int i = 0; i < 2; i++)
+        {
+            cards.Add(new Joker("Joker", "Specialkort"));
+            cards.Add(new Wolf("Varg", "Specialkort"));
         }
     }
 }

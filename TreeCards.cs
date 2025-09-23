@@ -4,8 +4,7 @@ public class TreeTop : Card
 {
     public List<string> Creatures { get; }
 
-    public TreeTop(List<string> creatures) 
-        : base("Tree Top", "Tree")
+    public TreeTop(List<string> creatures) : base("Trädkrona", "Träd")
     {
         Creatures = creatures;
     }
@@ -20,8 +19,7 @@ public class TreeTrunk : Card
 {
     public List<string> Creatures { get; }
 
-    public TreeTrunk(List<string> creatures)
-        : base("Tree Trunk", "Tree")
+    public TreeTrunk(List<string> creatures) : base("Trädstam", "Träd")
     {
         Creatures = creatures;
     }
