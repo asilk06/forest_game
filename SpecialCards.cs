@@ -5,6 +5,11 @@ public class Joker : Card
     {
         Value = value;
     }
+
+    public override string ToString()
+    {
+        return $"{Name} ({Type}) - Värde: {Value}";
+    }
 }
 
 public class Wolf : Card
@@ -13,5 +18,10 @@ public class Wolf : Card
     public Wolf(string name, string type, int value) : base(name, type)
     {
         Value = value;
+    }
+
+    public override string ToString()
+    {
+        return $"{Name} ({Type}) - Värde: {Value}";
     }
 }

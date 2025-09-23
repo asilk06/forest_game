@@ -43,8 +43,8 @@ public class Deck
             cards.Add(new TreeTop(RandomCreatures(4)));
         }
 
-        // 36 tree trunks
-        for (int i = 0; i < 36; i++)
+        // 39 tree trunks
+        for (int i = 0; i < 39; i++)
         {
             cards.Add(new TreeTrunk(RandomCreatures(4)));
         }
