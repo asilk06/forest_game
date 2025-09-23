@@ -1,27 +1,35 @@
 ﻿using System;
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
+        Console.WriteLine("Välkommen till Forest!");
         Deck deck = new Deck();
-        // deck.Add(new Card("Uggla", "Djur"));
-        // deck.Add(new Card("Groda", "Djur"));
-        // deck.Add(new Card("Älg", "Djur"));
+        deck.InitializeDeck();
         deck.Shuffle();
 
-        // Skapa spelare
-        Player alice = new Player("Alice");
+        Console.WriteLine($"Deck skapat med {deck.Count} kort.");
 
-        // Dra kort
-        alice.DrawCard(deck);
+        Player player1 = new Player("Spelare 1");
 
-        // Visa resultat
-        Console.WriteLine($"{alice.Name} drog: {alice.playerHand[0]}");
-        Console.WriteLine($"Kort kvar i leken: {deck.Count}");
+        Console.WriteLine($"{player1.Name} drar 3 kort.");
+        for (int i = 0; i < 3; i++)
+        {
+            player1.DrawCard(deck);
+            Console.WriteLine($"Drog: {player1.playerHand[i]}");
+        }
 
-        // Skapa bord och spela kort
+        Console.WriteLine($"Kort kvar i deck: {deck.Count}");
+
         Table table = new Table();
-        table.PlayCard(alice.playerHand[0]);
-        Console.WriteLine($"Kort på bordet: {table.CardsOnTable[0]}");
+        table.PlayCard(player1.playerHand[0]);
+        Console.WriteLine($"Spelade kort på bordet: {player1.playerHand[0]}");
+        player1.playerHand.RemoveAt(0);
+
+        Console.WriteLine($"Kort kvar i hand:");
+        foreach (var card in player1.playerHand)
+        {
+            Console.WriteLine(card);
+        }
     }
 }

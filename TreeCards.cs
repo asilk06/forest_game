@@ -1,43 +1,33 @@
+using System.Collections.Generic;
 
 public class TreeTop : Card
 {
-    public Dictionary<CreatureType, int> Creatures { get; }
+    public List<string> Creatures { get; }
 
-    public TreeTop(string name, string type, Dictionary<CreatureType, int> creatures) : base(name, type)
+    public TreeTop(List<string> creatures) 
+        : base("Tree Top", "Tree")
     {
         Creatures = creatures;
     }
 
+    public override string ToString()
+    {
+        return $"{Name} ({Type}) - [{string.Join(", ", Creatures)}]";
+    }
 }
 
 public class TreeTrunk : Card
 {
-    public Dictionary<CreatureType, int> Creatures { get; }
+    public List<string> Creatures { get; }
 
-    public TreeTrunk(string name, string type, Dictionary<CreatureType, int> creatures) : base(name, type)
+    public TreeTrunk(List<string> creatures)
+        : base("Tree Trunk", "Tree")
     {
         Creatures = creatures;
     }
-}
 
-//Jokerkort lägger till en redan existerande varelse
-public class JokerCard : Card
-{
-    public int Value { get; }
-
-    public JokerCard(string name, string type, int value) : base(name, type)
+    public override string ToString()
     {
-        Value = value;
-    }
-}
-
-// Wolfkort tar bort en typ av varelser från en stam
-public class WolfCard : Card
-{
-    public int Value { get; }
-
-    public WolfCard(string name, string type, int value) : base(name, type)
-    {
-        Value = value;
+        return $"{Name} ({Type}) - [{string.Join(", ", Creatures)}]";
     }
 }

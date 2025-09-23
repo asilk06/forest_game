@@ -2,7 +2,7 @@ public class Deck
 {
     private List<Card> cards = new List<Card>();
     private Random rng = new Random();
-
+    public int Count => cards.Count;
     public void Add(Card card) => cards.Add(card);
     public void Shuffle() // Blandning av kort med Fisher-Yates algoritmen
     {
@@ -22,8 +22,31 @@ public class Deck
     }
     public void InitializeDeck()
     {
-        // här ska decket genereras
-    }
+        string[] creaturePool = { "Uggla", "Groda", "Tomte", "Fe" };
 
-    public int Count => cards.Count;
+        // Metod för att generera en slumpmässig lista av varelser
+        List<string> RandomCreatures(int maxCount)
+        {
+            int count = rng.Next(1, maxCount + 1);
+            List<string> creatures = new List<string>();
+            for (int i = 0; i < count; i++)
+            {
+             string creature = creaturePool[rng.Next(creaturePool.Length)];
+               creatures.Add(creature);
+            }
+            return creatures;
+        }
+
+       // 17 tree tops
+        for (int i = 0; i < 17; i++)
+        {
+            cards.Add(new TreeTop(RandomCreatures(4)));
+        }
+
+       // 43 tree trunks
+        for (int i = 0; i < 43; i++)
+        {
+            cards.Add(new TreeTrunk(RandomCreatures(4)));
+        }
+    }
 }
