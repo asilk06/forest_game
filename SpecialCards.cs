@@ -1,11 +1,17 @@
 public class Joker : Card
 {
-    public Joker(string name, string type) : base(name, type)
-    { }
+    public int Value { get; }
+    public Joker(string name, string type, int value) : base(name, type)
+    {
+        Value = value;
+    }
 }
 
 public class Wolf : Card
 {
-    public Wolf(string name, string type) : base(name, type)
-    { }
+    public int Value { get; }
+    public Wolf(string name, string type, int value) : base(name, type)
+    {
+        Value = value;
+    }
 }

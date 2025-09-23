@@ -43,17 +43,19 @@ public class Deck
             cards.Add(new TreeTop(RandomCreatures(4)));
         }
 
-        // 40 tree trunks
-        for (int i = 0; i < 40; i++)
+        // 36 tree trunks
+        for (int i = 0; i < 36; i++)
         {
             cards.Add(new TreeTrunk(RandomCreatures(4)));
         }
 
+        int maxValue = rng.Next(1, 5); // Slumpmässigt värde mellan 1 och 4 för jokrar och vargar
+
         // 2 jokers och 2 wolves
         for (int i = 0; i < 2; i++)
         {
-            cards.Add(new Joker("Joker", "Specialkort"));
-            cards.Add(new Wolf("Varg", "Specialkort"));
+            cards.Add(new Joker("Joker", "Specialkort", maxValue));
+            cards.Add(new Wolf("Varg", "Specialkort", maxValue));
         }
     }
 }
