@@ -57,5 +57,7 @@ public class Deck
             cards.Add(new Joker("Joker", "Specialkort", maxValue));
             cards.Add(new Wolf("Varg", "Specialkort", maxValue));
         }
+
+        Shuffle();
     }
 }
