@@ -13,7 +13,7 @@ public class Deck
         }
     }
 
-    public Card? Draw()
+    public Card? Draw() // Drar det översta kortet från leken
     {
         if (cards.Count == 0) return null;
         var top = cards[0];
@@ -58,6 +58,6 @@ public class Deck
             cards.Add(new Wolf("Varg", "Specialkort", maxValue));
         }
 
-        Shuffle();
+        Shuffle(); // Blanda korten efter att ha lagt till alla
     }
 }

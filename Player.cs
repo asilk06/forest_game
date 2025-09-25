@@ -9,7 +9,7 @@ public class Player
         Name = name;
     }
 
-    public void DrawCard(Deck deck)
+    public void DrawCard(Deck deck) // Metod för att dra ett kort från leken och lägga till det i spelarens hand
     {
         var card = deck.Draw();
         if (card != null) playerHand.Add(card);
