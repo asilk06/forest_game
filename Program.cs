@@ -14,7 +14,7 @@ class Program
         string? playerCountInput = Console.ReadLine();
         int playerCount;
 
-        while (true)
+        while (true) // Loop för att få giltigt antal spelare
         {
             if (playerCountInput != null && int.TryParse(playerCountInput, out playerCount) && playerCount >= 2 && playerCount <= 4) // Kolla om spelarantalet är giltigt
             {
@@ -107,8 +107,52 @@ class Program
                     Thread.Sleep(1000);
                     Console.WriteLine();
 
+                    Dictionary<string, int> creatureCount = new Dictionary<string, int>();
+                    foreach (var card in table.CardsOnTable) // Räkna varelser på bordet
+                    {
+                        List<string> creatures = new List<string>();
+                        if (card is TreeTop treeTop) creatures = treeTop.Creatures;
+                        if (card is TreeTrunk treeTrunk) creatures = treeTrunk.Creatures;
+
+                        foreach (var creature in creatures)
+                        {
+                            if (!creatureCount.ContainsKey(creature)) 
+                                creatureCount[creature] = 0;
+                            creatureCount[creature]++;
+                        }
+                    }
+
+                    foreach (var creature in creatureCount)
+                    {
+                        if (creature.Value >= 7) // Om 7 eller fler av samma varelse, låt spelaren samla in korten
+                        {
+                            Console.WriteLine($"Det finns 7 eller fler {creature.Key} på bordet! Vill du samla in dem? (j/n)");
+                            string? collectInput = Console.ReadLine();
+                            if (collectInput != null && collectInput.ToLower() == "j") // Spelaren väljer att samla in korten
+                            {
+                                var cardsToCollect = new List<Card>();
+                                foreach (var card in table.CardsOnTable) // Hitta och samla in kort med den varelsen
+                                {
+                                    if ((card is TreeTop treeTop && treeTop.Creatures.Contains(creature.Key)) ||
+                                        (card is TreeTrunk treeTrunk && treeTrunk.Creatures.Contains(creature.Key)))
+                                    {
+                                        cardsToCollect.Add(card);
+                                    }
+                                }
+
+                                currentPlayer.playerPoints += cardsToCollect.Count; // Lägg till poäng
+                                foreach (var card in cardsToCollect) table.CardsOnTable.Remove(card);
+
+                                Console.WriteLine($"{currentPlayer.Name} samlade in {cardsToCollect.Count} kort med {creature.Key} och har nu {currentPlayer.playerPoints} poäng.");
+                            }
+                        }
+                    }
+
                     currentPlayer.DrawCard(deck); // Dra ett nytt kort efter att ha spelat
                     Console.WriteLine($"{currentPlayer} drog kortet {currentPlayer.playerHand.Last()}");
+                    Console.WriteLine();
+                    Thread.Sleep(1000);
+                    Console.WriteLine($"Det finns nu {deck.Count} kort kvar i leken.");
                     break; // giltigt val
                 }
                 else
