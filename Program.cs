@@ -64,13 +64,19 @@ class Program
             if (table.CardsOnTable.Count == 0) // Om inga kort på bordet
             {
                 Console.WriteLine("Inga kort på bordet.");
+                Thread.Sleep(500);
             }
             else // Visa korten på bordet
             {
+                table.CardsOnTable = table.CardsOnTable
+                    .OrderByDescending(c => c is TreeTop)    // TreeTops först
+                    .ThenByDescending(c => c is TreeTrunk)   // TreeTrunks efter
+                    .ToList();
+
                 foreach (var card in table.CardsOnTable)
                 {
                     Console.WriteLine(card);
-                    Thread.Sleep(300);
+                    Thread.Sleep(400);
                 }
             }
 
@@ -80,9 +86,10 @@ class Program
             for (int i = 0; i < currentPlayer.playerHand.Count; i++) // Visa spelarens kort
             {
                 Console.WriteLine($"{i + 1}. {currentPlayer.playerHand[i]}");
-                Thread.Sleep(300);
+                Thread.Sleep(400);
             }
-
+            Console.WriteLine();
+            
             int cardChoice;
             string? cardChoiceInput;
             while (true) // Loop för att välja kort att spela
@@ -95,16 +102,13 @@ class Program
                     table.PlayCard(chosenCard);
                     currentPlayer.playerHand.RemoveAt(cardChoice - 1);
 
+                    Console.WriteLine();
                     Console.WriteLine($"{currentPlayer.Name} spelade: {chosenCard}");
+                    Thread.Sleep(1000);
                     Console.WriteLine();
 
-                    Console.WriteLine("Kort på bordet:");
-                    foreach (var card in table.CardsOnTable)
-                    {
-                        Console.WriteLine(card);
-                        Thread.Sleep(300);
-                    }
-                    Thread.Sleep(500);
+                    currentPlayer.DrawCard(deck); // Dra ett nytt kort efter att ha spelat
+                    Console.WriteLine($"{currentPlayer} drog kortet {currentPlayer.playerHand.Last()}");
                     break; // giltigt val
                 }
                 else
@@ -114,32 +118,6 @@ class Program
             }
             currentPlayerIndex = (currentPlayerIndex + 1) % players.Count; // Nästa spelares tur
             Console.WriteLine();
-
-
         }
-
-        // Console.WriteLine($"Deck skapat med {deck.Count} kort.");
-
-        // Player player1 = new Player("Spelare 1");
-
-        // Console.WriteLine($"{player1.Name} drar 3 kort.");
-        // for (int i = 0; i < 3; i++)
-        // {
-        //     player1.DrawCard(deck);
-        //     Console.WriteLine($"Drog: {player1.playerHand[i]}");
-        // }
-
-        // Console.WriteLine($"Kort kvar i deck: {deck.Count}");
-
-        // Table table = new Table();
-        // table.PlayCard(player1.playerHand[0]);
-        // Console.WriteLine($"Spelade kort på bordet: {player1.playerHand[0]}");
-        // player1.playerHand.RemoveAt(0);
-
-        // Console.WriteLine($"Kort kvar i hand:");
-        // foreach (var card in player1.playerHand)
-        // {
-        //     Console.WriteLine(card);
-        // }
     }
 }
