@@ -4,6 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.Clear();
         Console.WriteLine("Välkommen till Forest!");
         Deck deck = new Deck();
         deck.InitializeDeck();
@@ -16,22 +17,30 @@ class Program
 
         while (true) // Loop för att få giltigt antal spelare
         {
-            if (playerCountInput != null && int.TryParse(playerCountInput, out playerCount) && playerCount >= 2 && playerCount <= 4) // Kolla om spelarantalet är giltigt
+            // Kolla om spelarantalet är giltigt
+            if (playerCountInput != null &&
+            int.TryParse(playerCountInput, out playerCount) &&
+            playerCount >= 2 &&
+            playerCount <= 4)
             {
                 Console.WriteLine();
+                Thread.Sleep(1000);
                 Console.WriteLine($"Antal spelare: {playerCount}");
                 Console.WriteLine();
                 break; // giltigt antal spelare
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("Ogiltigt antal spelare. Vänligen ange ett nummer mellan 2 och 4.");
+                Thread.Sleep(1000);
                 Console.WriteLine();
                 playerCountInput = Console.ReadLine();
             }
         }
 
-        Thread.Sleep(750);
+        Thread.Sleep(1000);
+
         List<Player> players = new List<Player>(); // Skapa spelarlistan
         for (int i = 1; i <= playerCount; i++)
         {
@@ -49,9 +58,10 @@ class Program
         }
 
         Console.WriteLine();
+        Thread.Sleep(500);
         Console.WriteLine("Spelet börjar nu. Lycka till!");
-        Console.WriteLine();
-        Thread.Sleep(1000);
+        Thread.Sleep(2000);
+        Console.Clear();
 
         int currentPlayerIndex = 0;
         Table table = new Table();
@@ -76,7 +86,7 @@ class Program
                 foreach (var card in table.CardsOnTable)
                 {
                     Console.WriteLine(card);
-                    Thread.Sleep(400);
+                    Thread.Sleep(500);
                 }
             }
 
@@ -86,7 +96,7 @@ class Program
             for (int i = 0; i < currentPlayer.playerHand.Count; i++) // Visa spelarens kort
             {
                 Console.WriteLine($"{i + 1}. {currentPlayer.playerHand[i]}");
-                Thread.Sleep(400);
+                Thread.Sleep(500);
             }
             Console.WriteLine();
 
@@ -96,15 +106,63 @@ class Program
             {
                 Console.WriteLine("Välj ett kort att spela (ange numret):");
                 cardChoiceInput = Console.ReadLine();
-                if (cardChoiceInput != null && int.TryParse(cardChoiceInput, out cardChoice) && cardChoice >= 1 && cardChoice <= currentPlayer.playerHand.Count) // Kolla om kortvalet är giltigt
+                
+                // Kolla om kortvalet är giltigt
+                if (cardChoiceInput != null &&
+                int.TryParse(cardChoiceInput, out cardChoice) &&
+                cardChoice >= 1 &&
+                cardChoice <= currentPlayer.playerHand.Count)
                 {
                     Card chosenCard = currentPlayer.playerHand[cardChoice - 1];
+
+                    if (chosenCard is Joker joker)
+                    {
+                        List<string> allowedCreatures = new List<string> { "Uggla", "Groda", "Tomte", "Fe" };
+
+                        Console.WriteLine();
+                        Console.WriteLine($"Du spelade en Joker med värde {joker.Value}");
+                        Console.WriteLine();
+                        
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Välj en varelse att lägga till på bordet:");
+
+                        for (int i = 0; i < allowedCreatures.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {allowedCreatures[i]}");
+                        }
+
+                        int creatureChoice;
+                        while (true) // Loop för att välja varelse för jokern
+                        {
+                            string? creatureChoiceInput = Console.ReadLine();
+                            if (creatureChoiceInput != null &&
+                            int.TryParse(creatureChoiceInput, out creatureChoice) &&
+                            creatureChoice >= 1 &&
+                            creatureChoice <= allowedCreatures.Count)
+                            {
+                                break; // giltigt val
+                            }
+                            Console.WriteLine("Ogiltigt val. Försök igen.");
+                        }
+
+                        string chosenCreature = allowedCreatures[creatureChoice - 1];
+
+                        for (int i = 0; i < joker.Value; i++) // Lägg till valda varelser på bordet
+                        {
+                            table.PlayCard(new TreeTrunk(new List<string> { chosenCreature }));
+                        }
+
+                        Console.WriteLine($"Jokern lade till {joker.Value} {chosenCreature} på bordet.");
+                        Thread.Sleep(1000);
+
+                        currentPlayer.playerHand.RemoveAt(cardChoice - 1);
+                    }
                     table.PlayCard(chosenCard);
                     currentPlayer.playerHand.RemoveAt(cardChoice - 1);
 
                     Console.WriteLine();
                     Console.WriteLine($"{currentPlayer.Name} spelade: {chosenCard}");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(1000);
                     Console.WriteLine();
 
                     Dictionary<string, int> creatureCount = new Dictionary<string, int>();
@@ -128,7 +186,9 @@ class Program
                         {
                             Console.WriteLine($"Det finns 7 eller fler {creature.Key} på bordet! Vill du samla in dem? (j/n)");
                             string? collectInput = Console.ReadLine();
-                            if (collectInput != null && collectInput.ToLower() == "j") // Spelaren väljer att samla in korten
+                            
+                            // Spelaren väljer att samla in korten
+                            if (collectInput != null && collectInput.ToLower() == "j")
                             {
                                 var cardsToCollect = new List<Card>();
                                 foreach (var card in table.CardsOnTable) // Hitta och samla in kort med den varelsen
@@ -149,8 +209,8 @@ class Program
                     }
 
                     currentPlayer.DrawCard(deck); // Dra ett nytt kort efter att ha spelat
-                    Console.WriteLine($"{currentPlayer} drog kortet {currentPlayer.playerHand.Last()}");
-                    Thread.Sleep(1500);
+                    Console.WriteLine($"{currentPlayer.Name} drog kortet {currentPlayer.playerHand.Last()}");
+                    Thread.Sleep(1000);
                     Console.WriteLine();
                     Console.WriteLine($"Det finns nu {deck.Count} kort kvar i leken.");
                     break; // giltigt val
@@ -165,7 +225,8 @@ class Program
             {
                 Console.WriteLine();
                 Console.WriteLine("Inga kort kvar i leken. Spelet avslutas.");
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
+                Console.Clear();
                 Console.WriteLine("Slutpoäng:");
                 Thread.Sleep(1000);
                 foreach (var player in players) // Visa slutpoängen

@@ -49,11 +49,10 @@ public class Deck
             cards.Add(new TreeTrunk(RandomCreatures(4)));
         }
 
-        int maxValue = rng.Next(1, 5); // Slumpmässigt värde mellan 1 och 4 för jokrar och vargar
-
         // 2 jokers och 2 wolves
         for (int i = 0; i < 2; i++)
         {
+            int maxValue = rng.Next(1, 5); // Slumpmässigt maxvärde mellan 1 och 4
             cards.Add(new Joker("Joker", "Specialkort", maxValue));
             cards.Add(new Wolf("Varg", "Specialkort", maxValue));
         }
