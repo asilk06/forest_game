@@ -82,14 +82,14 @@ class Program
 
             Console.WriteLine();
 
-            Console.WriteLine($"{currentPlayer.Name}s tur. Dina kort:");
+            Console.WriteLine($"--- {currentPlayer.Name}s tur. Dina kort: ---");
             for (int i = 0; i < currentPlayer.playerHand.Count; i++) // Visa spelarens kort
             {
                 Console.WriteLine($"{i + 1}. {currentPlayer.playerHand[i]}");
                 Thread.Sleep(400);
             }
             Console.WriteLine();
-            
+
             int cardChoice;
             string? cardChoiceInput;
             while (true) // Loop för att välja kort att spela
@@ -104,7 +104,7 @@ class Program
 
                     Console.WriteLine();
                     Console.WriteLine($"{currentPlayer.Name} spelade: {chosenCard}");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1500);
                     Console.WriteLine();
 
                     Dictionary<string, int> creatureCount = new Dictionary<string, int>();
@@ -116,7 +116,7 @@ class Program
 
                         foreach (var creature in creatures)
                         {
-                            if (!creatureCount.ContainsKey(creature)) 
+                            if (!creatureCount.ContainsKey(creature))
                                 creatureCount[creature] = 0;
                             creatureCount[creature]++;
                         }
@@ -141,7 +141,7 @@ class Program
                                 }
 
                                 currentPlayer.playerPoints += cardsToCollect.Count; // Lägg till poäng
-                                foreach (var card in cardsToCollect) table.CardsOnTable.Remove(card);
+                                foreach (var card in cardsToCollect) table.CardsOnTable.Remove(card); // Ta bort korten från bordet
 
                                 Console.WriteLine($"{currentPlayer.Name} samlade in {cardsToCollect.Count} kort med {creature.Key} och har nu {currentPlayer.playerPoints} poäng.");
                             }
@@ -150,8 +150,8 @@ class Program
 
                     currentPlayer.DrawCard(deck); // Dra ett nytt kort efter att ha spelat
                     Console.WriteLine($"{currentPlayer} drog kortet {currentPlayer.playerHand.Last()}");
+                    Thread.Sleep(1500);
                     Console.WriteLine();
-                    Thread.Sleep(1000);
                     Console.WriteLine($"Det finns nu {deck.Count} kort kvar i leken.");
                     break; // giltigt val
                 }
@@ -160,8 +160,46 @@ class Program
                     Console.WriteLine("Ogiltigt val. Försök igen.");
                 }
             }
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count; // Nästa spelares tur
-            Console.WriteLine();
+
+            if (deck.Count == 0) // Om inga kort kvar i leken, avsluta spelet
+            {
+                Console.WriteLine();
+                Console.WriteLine("Inga kort kvar i leken. Spelet avslutas.");
+                Thread.Sleep(1000);
+                Console.WriteLine("Slutpoäng:");
+                Thread.Sleep(1000);
+                foreach (var player in players) // Visa slutpoängen
+                {
+                    Console.WriteLine($"{player.Name}: {player.playerPoints} poäng");
+                    Thread.Sleep(500);
+                }
+
+                int maxPoints = players.Max(p => p.playerPoints); // Hitta högsta poängen
+                var winners = players.Where(p => p.playerPoints == maxPoints).ToList();
+                if (winners.Count > 1) // Oavgjort
+                {
+                    Console.WriteLine("Det är oavgjort mellan: " + string.Join(", ", winners.Select(w => w.Name)));
+                }
+                else // En vinnare
+                {
+                    Console.WriteLine($"Vinnaren är {winners[0].Name} med {winners[0].playerPoints} poäng! Grattis!");
+                }
+
+                break; // Avsluta spel loopen
+            }
+            else
+            {
+                Console.WriteLine("Tryck på valfri tangent för att börja nästa tur...");
+                Console.ReadKey(true); // Väntar på att spelaren trycker på en tangent
+                Console.Clear(); // Rensar terminalen
+                currentPlayerIndex = (currentPlayerIndex + 1) % players.Count; // Nästa spelares tur
+                Console.WriteLine();
+            }
         }
     }
 }
+
+// Om det finns flera olika typer av varelser som är 7 eller flera på bordet, så kan spelaren samla in alla även efter första insamlingen.
+// Exempel: 7 rävar och 8 ugglor på bordet. 
+// Spelaren kan samla in både rävarna och ugglorna, även om det finns mindre än 8 ugglor på bordet efter att spelaren samlar in rävarna.
+// Detta ska egentligen inte vara möjligt enligt regler, men jag har inte tid att fixa det nu.
