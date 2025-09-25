@@ -4,8 +4,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        int playerCount;
-
         Console.WriteLine("Välkommen till Forest!");
         Deck deck = new Deck();
         deck.InitializeDeck();
@@ -14,6 +12,7 @@ class Program
 
         Console.WriteLine("Hur många spelare? (2-4)");
         string? playerCountInput = Console.ReadLine();
+        int playerCount;
 
         while (true)
         {
@@ -75,15 +74,48 @@ class Program
                 }
             }
 
+            Console.WriteLine();
+
             Console.WriteLine($"{currentPlayer.Name}s tur. Dina kort:");
-            foreach (var card in currentPlayer.playerHand)
+            for (int i = 0; i < currentPlayer.playerHand.Count; i++) // Visa spelarens kort
             {
-                for (int i = 0; i < currentPlayer.playerHand.Count; i++)
+                Console.WriteLine($"{i + 1}. {currentPlayer.playerHand[i]}");
+                Thread.Sleep(300);
+            }
+
+            int cardChoice;
+            string? cardChoiceInput;
+            while (true) // Loop för att välja kort att spela
+            {
+                Console.WriteLine("Välj ett kort att spela (ange numret):");
+                cardChoiceInput = Console.ReadLine();
+                if (cardChoiceInput != null && int.TryParse(cardChoiceInput, out cardChoice) && cardChoice >= 1 && cardChoice <= currentPlayer.playerHand.Count) // Kolla om kortvalet är giltigt
                 {
-                    Console.WriteLine($"{i + 1}. {card}");
+                    Card chosenCard = currentPlayer.playerHand[cardChoice - 1];
+                    table.PlayCard(chosenCard);
+                    currentPlayer.playerHand.RemoveAt(cardChoice - 1);
+
+                    Console.WriteLine($"{currentPlayer.Name} spelade: {chosenCard}");
+                    Console.WriteLine();
+
+                    Console.WriteLine("Kort på bordet:");
+                    foreach (var card in table.CardsOnTable)
+                    {
+                        Console.WriteLine(card);
+                        Thread.Sleep(300);
+                    }
+                    Thread.Sleep(500);
+                    break; // giltigt val
+                }
+                else
+                {
+                    Console.WriteLine("Ogiltigt val. Försök igen.");
                 }
             }
-            break;
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count; // Nästa spelares tur
+            Console.WriteLine();
+
+
         }
 
         // Console.WriteLine($"Deck skapat med {deck.Count} kort.");
