@@ -172,7 +172,7 @@ class Program
                         if (card is TreeTop treeTop) creatures = treeTop.Creatures;
                         if (card is TreeTrunk treeTrunk) creatures = treeTrunk.Creatures;
 
-                        foreach (var creature in creatures)
+                        foreach (var creature in creatures) 
                         {
                             if (!creatureCount.ContainsKey(creature))
                                 creatureCount[creature] = 0;
